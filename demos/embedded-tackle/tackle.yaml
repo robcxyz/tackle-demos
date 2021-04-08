@@ -1,0 +1,124 @@
+---
+
+hello:
+  type: confirm
+  message: |
+    One of the most powerful aspects of tackle box is embedding tackle boxes within
+    tackle boxes in a modular way. This demo is supposed to show some of the strategies
+    around handling this type of pattern.
+
+    Ready to get started?
+
+intro:
+  type: confirm
+  message: |
+    
+    There are two basic ways of calling another tackle box.
+    1. Call another tackle box that is remote.
+    2. Call another tackle box localy, ie from same repo or file structure
+
+    When writing a call to a tackle box, you put the remote repository in the
+    `template` field of the tackle box yaml like so.
+
+    remote_tackle_box:
+      type: tackle
+      template: https://github.com/insight-infrastructure/tackle-demo
+
+    For local tackle box's, you put the path in the `template` field like so.
+
+    local_tackle_box:
+      type: tackle
+      template: path/to/some/dir  # With a yaml file
+
+    Alternatively, you can use the `chdir` keyword in this way,
+
+    local_tackle_box:
+      type: tackle
+      chdir: path/to/some/dir  # No need to include `template` as it is assumed to be in that dir.
+
+
+remote:
+  type: confirm
+  message: |
+    
+    The only real difference between these two situations is what the current
+    working directory is. For instance when calling a remote tackle box on GitHub,
+    the repo is first cloned to a `~/.cookiecutters` folder and the working
+    directory is switched to that context.
+
+remote_show:
+  type: listdir
+  path: ~/.tackle
+
+remote_demo:
+  type: confirm
+  message: |
+    
+    For instance the following is the contents of that directory.
+
+    {{ remote_show }}
+
+    You can see the all the cookiecutters that you have downloaded there.
+    When the tackle box is done executing, it will return to the context it
+    was called from. This is done so that remote tackle box's can reference
+    local files to the repo in the call.
+
+chdir:
+  type: confirm
+  message: |
+    
+    If you want to execute the tackle box from any directory, us the `chdir`
+    parameter like so.
+
+    any_tackle_box:
+      type: tackle
+      template: path/to/some/dir  # With a yaml file
+      chdir: path/to/the/dir/you/want/to/execute/from
+
+output_context:
+  type: confirm
+  message: |
+    
+    Any variables that you set in the embedded tackle box will be output as a
+    dictionary under that variable. They can also be merged up to the parent
+    context by adding the `merge: true` parameter like so.
+
+    any_tackle_box:
+      type: tackle
+      template: path/to/some/dir
+      merge: true
+
+context_building:
+  type: confirm
+  message: |
+
+    The last important note about calling embedded tackle box's is that if you
+    want to bring in some custom context, you can include this in an `existing_context`
+    field. This by default the call include the existing context `this`, ie the current
+    variables that you have set.
+
+    {% raw %}
+    local_tackle_box:
+      type: tackle
+      template: path/to/some/dir
+      existing_context: {{ this }}  # This is the default behavior. Modify for custom context.
+    {% endraw %}
+
+stuff_tackle_box:
+  type: tackle
+  template: stuffs
+  no_input: false
+  merge: true
+
+after:
+  type: yaml
+  path: after.yaml
+  contents: "{{ this }}"
+
+final:
+  type: confirm
+  message: |
+    
+    To see it all in action, checkout the demo directly and see what is
+    happening in this folder with the previously called items. Specifically,
+    observe how variables were overriden in the embedded tackle box.

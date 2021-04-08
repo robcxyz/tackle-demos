@@ -1,0 +1,19 @@
+demos_dir:
+  type: find_in_parent
+  target: demos
+
+confirm_command:
+  type: confirm
+  message: |
+    This is an example of a find_in_parent hook. It finds the absolute path
+    to whatever target directory that you need to find in the parent directories.
+    It is useful for setting absolute references to files and folders while
+    switching contexts in and out of other tackle boxes.
+
+    demos_dir:
+      type: find_in_parent
+      target: demos
+
+    It outputs a string per:
+    {% raw %}
+    {{ demos_dir }} = {% endraw %}{{ demos_dir }}

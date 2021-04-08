@@ -1,0 +1,34 @@
+hold:
+  type: confirm
+  message: hold jinja
+
+render_var:
+  type: var
+  input: 42
+
+jinja:
+  type: jinja
+  template_path: templates/things.py.j2
+  output_path: testing.py
+
+confirm:
+  type: path_exists
+  path: testing.py
+
+confirm_jinja:
+  type: confirm
+  message: |
+    This is an example of a jinja hook. It renders arbitrary templates
+    with the context dictionary that we are building.
+    
+    jinja:
+      type: jinja
+      command: pwd
+    
+    It outputs a string per:
+    {% raw %}
+    {{ jinja }} = {% endraw %}{{ jinja }}
+
+remove:
+  type: remove
+  path: testing.py

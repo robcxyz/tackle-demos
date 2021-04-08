@@ -1,0 +1,10 @@
+---
+
+stuff: Indeed
+
+things_tackle:
+  type: tackle
+  context_file: thing.yaml
+  chdir: things
+  merge: true  # See how this affects the output.
+  existing_context: "{{ this }}"

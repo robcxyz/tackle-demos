@@ -1,0 +1,50 @@
+---
+
+intro:
+  type: confirm
+  message: |
+    Tackle box has a plugins based system of making special actions available by
+    importing providers which are groups of hooks with special dependencies. For
+    example, there is a `git` provider that has a collection of hooks like `git_clone`
+    that depends on `GitPython`, a python package.
+
+    Providers are either imported as part of the base package or lazily imported
+    with it's dependencies installed in runtime as they are needed. Providers like
+    the `tackle`, `pyinquirer` (prompting), and `system` are in the base where as
+    most other providers have their dependencies installed in runtime. For instance
+    the AWS provider has a dependency on boto which isn't installed by default.
+
+    Providers as mentioned have hooks. Each hook is called via the `type` keyword.
+    Each hook exposes it's own interface that can be viewed at [Docs TBD] + [Help
+    Command TBD].
+
+hello:
+  type: confirm
+  message: |
+    Here is a run through of the different providers available.
+        - System: Wrap basic python packages and calls
+        - PyInquirer: Produce nice looking prompts and selectors
+        - Tackle box: Calls other tackle boxes / cookiecutters
+        - AWS: Wraps API calls to cloud providers
+        - Others TBD such as `git`, `github`, `crypto`, and others.
+
+      Ready to begin?
+
+all_providers:
+  type: listdir
+  path: providers
+
+providers:
+  type: checkbox
+  message: |
+    What providers do you want to checkout? Hit (i) to select all.
+
+    Note you will need AWS credentials to try the AWS provider.
+  choices: "{{ all_providers }}"
+
+hook_run:
+  type: tackle
+  chdir: "providers/{{ item}}"
+  when: "{{ providers|length > 0  }}"
+  loop: "{{ providers }}"
+

@@ -1,0 +1,14 @@
+---
+
+ops:
+  type: stat
+  input:
+    - command
+    - listdir
+    - jinja
+
+hook_run:
+  type: tackle
+  template: .
+  context_file: "{{ item }}.yaml"
+  loop: "{{ ops }}"

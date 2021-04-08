@@ -1,0 +1,13 @@
+demo:
+  - all-providers
+
+providers:
+  - pyinquirer
+  - tackle
+  - system
+
+checkbox: stuff
+select:
+  - stuff
+  - things
+

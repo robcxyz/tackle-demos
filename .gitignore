@@ -1,0 +1,9 @@
+.idea/
+.vscode
+env/
+
+!demos/gallery/tackle.yaml
+demos/gallery/*
+ouput.json
+
+before.yaml

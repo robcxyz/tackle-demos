@@ -1,0 +1,16 @@
+demo:
+- embedded-tackle
+index: 0
+item: embedded-tackle
+hello: true
+intro: true
+remote: true
+remote_show:
+- tackle-terraform
+- geometry
+remote_demo: true
+chdir: true
+output_context: true
+context_building: true
+stuff: None.
+things: No thank you...

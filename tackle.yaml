@@ -1,33 +1,27 @@
----
-
 demo:
-  type: checkbox
-  message: What demos do you want to do?
+  ->: checkbox What demos do you want to do?
   checked: true
   choices:
-    - monty-python: Monty Python basic demo
-    - embedded-tackle: Embedded tackle boxes
-    - all-providers: A tutorial of all the hooks and providers
+    - basics: Tackle box basics.
     - jinja-tutorial: A tutorial on useful patterns with jinja
-    - gallery: Galllery of the most popular cookiecutters
-  
+    - embedded-tackle: Embedded tackle boxes
+    - monty-python: Monty Python basic demo
+
 do_demo:
-  type: tackle
-  template: .
-  chdir: "demos/{{ item}}"
-  loop: "{{ demo }}"
-  when: "{{ demo|length > 0 }}"
+  ->: tackle tackle.yaml
+  chdir: demos/{{item}}
+  for: demo
+  if: demo|length > 0
 
 no_selected_demo_warning:
-  type: confirm
-  when: "{{ demo|length == 0 }}"
+  ->: confirm
+  if: demo|length == 0
   message: |
     You need to select a demo with the `space bar`.
-    
-    Do you want to try again?
-  else: false
 
+    Do you want to try again?
+#  else: false
 
 no_selected_demo:
-  type: tackle # Loops to beginning
-  when: "{{ no_selected_demo_warning }}"
+  ->: tackle # Loops to beginning
+  if: "{{ no_selected_demo_warning }}"

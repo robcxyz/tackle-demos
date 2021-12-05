@@ -1,40 +1,33 @@
 ---
-name:
-  type: input
-  message: What is your name?
+name->: input What is your name?
 
 colors:
-  type: checkbox
-  message: What are your favorite colors?
+  ->: checkbox What are your favorite colors?
   choices:
     - blue
     - green
     - grey
 
 wingspeed:
-  type: select
-  message: What is the airspeed velocity of an unladen swallow??
+  ->: select What is the airspeed velocity of an unladen swallow??
   choices:
     - I donno
     - What do you mean? African or European swallow?
 
 bad_outcome:
-  type: print
-  statement: Wrong answer {{ name }}... (Flung off bridge)
-  when: "{{ 'I donno' in wingspeed }}"
+  ->: print Wrong answer {{ name }}... (Flung off bridge)
+  if: wingspeed == 'I donno'
+#  else:
+#    ->: print How do you know so much about swallows?
 
 color_essays:
-  type: input
+  ->: input
   message: Please tell me how much you like the color {{item}}?
   default: Oh color {{item}}, you are so frickin cool...
-  loop: "{{ colors }}"
-  when: "{{ colors|length > 0 }}"
+  for: "{{ colors }}"
+  if: "{{ colors|length > 0 }}"
 
-democmd:
-  type: command
-  command: pwd
+democmd->: command pwd
 
-print_output:
-  type: pprint
-  statement: "{{ this }}"
+#print_output->: pprint "{{ this }}"
 

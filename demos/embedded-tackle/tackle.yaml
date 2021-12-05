@@ -1,7 +1,7 @@
 ---
 
 hello:
-  type: confirm
+  ->: confirm
   message: |
     One of the most powerful aspects of tackle box is embedding tackle boxes within
     tackle boxes in a modular way. This demo is supposed to show some of the strategies
@@ -10,7 +10,7 @@ hello:
     Ready to get started?
 
 intro:
-  type: confirm
+  ->: confirm
   message: |
     
     There are two basic ways of calling another tackle box.
@@ -21,24 +21,24 @@ intro:
     `template` field of the tackle box yaml like so.
 
     remote_tackle_box:
-      type: tackle
+      ->: tackle
       template: https://github.com/insight-infrastructure/tackle-demo
 
     For local tackle box's, you put the path in the `template` field like so.
 
     local_tackle_box:
-      type: tackle
+      ->: tackle
       template: path/to/some/dir  # With a yaml file
 
     Alternatively, you can use the `chdir` keyword in this way,
 
     local_tackle_box:
-      type: tackle
+      ->: tackle
       chdir: path/to/some/dir  # No need to include `template` as it is assumed to be in that dir.
 
 
 remote:
-  type: confirm
+  ->: confirm
   message: |
     
     The only real difference between these two situations is what the current
@@ -47,11 +47,11 @@ remote:
     directory is switched to that context.
 
 remote_show:
-  type: listdir
+  ->: listdir
   path: ~/.tackle
 
 remote_demo:
-  type: confirm
+  ->: confirm
   message: |
     
     For instance the following is the contents of that directory.
@@ -64,19 +64,19 @@ remote_demo:
     local files to the repo in the call.
 
 chdir:
-  type: confirm
+  ->: confirm
   message: |
     
     If you want to execute the tackle box from any directory, us the `chdir`
     parameter like so.
 
     any_tackle_box:
-      type: tackle
+      ->: tackle
       template: path/to/some/dir  # With a yaml file
       chdir: path/to/the/dir/you/want/to/execute/from
 
 output_context:
-  type: confirm
+  ->: confirm
   message: |
     
     Any variables that you set in the embedded tackle box will be output as a
@@ -84,12 +84,12 @@ output_context:
     context by adding the `merge: true` parameter like so.
 
     any_tackle_box:
-      type: tackle
+      ->: tackle
       template: path/to/some/dir
       merge: true
 
 context_building:
-  type: confirm
+  ->: confirm
   message: |
 
     The last important note about calling embedded tackle box's is that if you
@@ -99,24 +99,24 @@ context_building:
 
     {% raw %}
     local_tackle_box:
-      type: tackle
+      ->: tackle
       template: path/to/some/dir
       existing_context: {{ this }}  # This is the default behavior. Modify for custom context.
     {% endraw %}
 
 stuff_tackle_box:
-  type: tackle
+  ->: tackle
   template: stuffs
   no_input: false
   merge: true
 
 after:
-  type: yaml
+  ->: yaml
   path: after.yaml
   contents: "{{ this }}"
 
 final:
-  type: confirm
+  ->: confirm
   message: |
     
     To see it all in action, checkout the demo directly and see what is

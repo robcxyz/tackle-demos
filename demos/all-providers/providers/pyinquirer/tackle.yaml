@@ -1,15 +1,13 @@
 ---
 
 ops:
-  type: stat
-  input:
-    - confirm
-    - input
-    - list
-    - checkbox
+  - confirm
+  - input
+  - list
+  - checkbox
 
 hook_run:
-  type: tackle
+  ->: tackle
   template: .
   context_file: "{{ item }}.yaml"
   loop: "{{ ops }}"

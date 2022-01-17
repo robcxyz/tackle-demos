@@ -1,14 +1,17 @@
+intro_>: print |
+  Welcome to tackle-box!
+
 demo:
   ->: checkbox What demos do you want to do?
   checked: true
   choices:
-    - basics: Tackle box basics.
-    - jinja-tutorial: A tutorial on useful patterns with jinja
-    - embedded-tackle: Embedded tackle boxes
-    - monty-python: Monty Python basic demo
+    - project-structure: Intro to project structure
+    - syntax: Tackle box syntax
+    - creating-providers: Creating tackle-box providers
+    - jinja-tutorial: Useful patterns with jinja
 
 do_demo:
-  ->: tackle tackle.yaml
+  ->: tackle
   chdir: demos/{{item}}
   for: demo
   if: demo|length > 0
@@ -16,12 +19,13 @@ do_demo:
 no_selected_demo_warning:
   ->: confirm
   if: demo|length == 0
+  default: false
   message: |
     You need to select a demo with the `space bar`.
 
     Do you want to try again?
-#  else: false
+  else: false
 
 no_selected_demo:
-  ->: tackle # Loops to beginning
-  if: "{{ no_selected_demo_warning }}"
+  ->: tackle  # Loops to beginning
+  if: no_selected_demo_warning
